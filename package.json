@@ -8,12 +8,10 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "copy-license": "cp projects/ngx-carpenter/.LICENSE dist/ngx-carpenter-library",
-    "copy-readme": "cp projects/ngx-carpenter/readme.md dist/ngx-carpenter-library",
-    "copy-files": "npm run copy-license && npm run copy-readme",
+    "copy-license": "cp projects/ngx-carpenter/.\\LICENSE dist/ngx-carpenter",
     "build-carpenter": "npm run ng build --prod ngx-carpenter",
     "pack-carpenter": "cd dist/ngx-carpenter && npm pack",
-    "package": "npm run build-carpenter && npm run copy-files && npm run pack-carpenter"
+    "package": "npm run build-carpenter && npm run copy-license && npm run pack-carpenter"
   },
   "private": true,
   "dependencies": {
