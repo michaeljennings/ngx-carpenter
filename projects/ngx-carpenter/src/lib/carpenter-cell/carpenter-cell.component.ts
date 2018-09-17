@@ -1,4 +1,5 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { P } from '@angular/core/src/render3';
 
 @Component({
   selector: 'ngx-carpenter-cell',
@@ -29,15 +30,19 @@ export class CarpenterCellComponent implements OnChanges {
     public value: any;
 
     ngOnChanges(changes: SimpleChanges): void {
-        if (this.row && this.field) {
-            // If the field contains a . then the user is trying to render
-            // a nested property.
-            if (this.field.includes('.')) {
-                this.value = this.field.split('.').reduce((object, key) => {
-                    return object[key];
-                }, this.row);
+        if (this.row) {
+            if (this.field) {
+                // If the field contains a . then the user is trying to render
+                // a nested property.
+                if (this.field.includes('.')) {
+                    this.value = this.field.split('.').reduce((object, key) => {
+                        return object[key];
+                    }, this.row);
+                } else {
+                    this.value = this.row[this.field];
+                }
             } else {
-                this.value = this.row[this.field];
+                this.value = this.row;
             }
         }
     }

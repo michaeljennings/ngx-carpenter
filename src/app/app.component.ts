@@ -22,6 +22,22 @@ export class AppComponent {
         },
     ];
 
+    headingsWithPresenters: Heading[] = [
+        {
+            label: 'Name',
+            property: 'name',
+            presenter: (name) => {
+                return `<strong>${name}</strong>`;
+            }
+        },
+        {
+            label: 'Description',
+            presenter: (row) => {
+                return `<span class="text-success">${row.description}</span>`
+            }
+        },
+    ];
+
     rows = [
         {
             name: 'New Product',
