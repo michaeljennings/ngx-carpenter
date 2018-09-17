@@ -8,11 +8,13 @@ import { PathStorageService } from './services/path-storage.service';
 import { SessionStorageService } from './services/session-storage.service';
 import { CarpenterPaginationControlsComponent } from './carpenter-pagination-controls/carpenter-pagination-controls.component';
 import { CarpenterPreloaderComponent } from './carpenter-preloader/carpenter-preloader.component';
+import { BsDropdownModule } from 'ngx-bootstrap';
 
 @NgModule({
     imports: [
         CommonModule,
         RouterModule,
+        BsDropdownModule.forRoot(),
     ],
     declarations: [
         CarpenterComponent,

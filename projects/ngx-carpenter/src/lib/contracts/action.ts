@@ -1,7 +1,8 @@
 export interface Action {
-    class: string | string[];
     label: string;
+    class?: string | string[];
     icon?: string;
     routerLink?: (row) => string;
     callback?: (row) => any;
+    group?: Action[];
 }

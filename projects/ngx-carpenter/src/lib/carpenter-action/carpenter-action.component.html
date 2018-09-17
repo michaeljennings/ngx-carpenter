@@ -1,11 +1,36 @@
-<ng-container *ngIf="action.routerLink">
-    <a [routerLink]="action.routerLink(row)" [ngClass]="action.class">
-        <i *ngIf="action.icon" [ngClass]="action.icon"></i> {{ action.label }}
-    </a>
+<ng-container *ngIf="! action.group">
+    <ng-container *ngIf="action.routerLink">
+        <a [routerLink]="action.routerLink(row)" [ngClass]="action.class">
+            <i *ngIf="action.icon" [ngClass]="action.icon"></i> {{ action.label }}
+        </a>
+    </ng-container>
+
+    <ng-container *ngIf="action.callback">
+        <button type="button" [ngClass]="action.class" (click)="action.callback(row)">
+            <i *ngIf="action.icon" [ngClass]="action.icon"></i> {{ action.label }}
+        </button>
+    </ng-container>
 </ng-container>
 
-<ng-container *ngIf="action.callback">
-    <button type="button" [ngClass]="action.class" (click)="action.callback(row)">
-        <i *ngIf="action.icon" [ngClass]="action.icon"></i> {{ action.label }}
-    </button>
+<ng-container *ngIf="action.group">
+    <div class="btn-group" dropdown>
+        <button id="button-basic" dropdownToggle type="button" class="btn dropdown-toggle" [ngClass]="action.class" aria-controls="dropdown-basic">
+            {{ action.label }} <span class="caret"></span>
+        </button>
+        <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
+            <li role="menuitem" *ngFor="let innerAction of action.group">
+                <ng-container *ngIf="innerAction.routerLink">
+                    <a class="dropdown-item" [routerLink]="innerAction.routerLink(row)">
+                        <i *ngIf="innerAction.icon" [ngClass]="innerAction.icon"></i> {{ innerAction.label }}
+                    </a>
+                </ng-container>
+
+                <ng-container *ngIf="innerAction.callback">
+                    <a class="dropdown-item" (click)="innerAction.callback(row)">
+                        <i *ngIf="innerAction.icon" [ngClass]="innerAction.icon"></i> {{ innerAction.label }}
+                    </a>
+                </ng-container>
+            </li>
+        </ul>
+    </div>
 </ng-container>
