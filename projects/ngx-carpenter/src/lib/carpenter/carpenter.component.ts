@@ -20,7 +20,7 @@ export class CarpenterComponent implements OnInit, DoCheck {
     /**
      * The rows to be displayed in the table.
      */
-    @Input() public rows: any[] = [];
+    @Input() public rows: any[];
 
     /**
      * A paginated list of items to display in the table.

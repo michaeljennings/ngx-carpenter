@@ -5,11 +5,35 @@
 </head>
 <body>
 <div class="container">
-<h2>Example</h2>
+    <h2>Table With Rows</h2>
     <ngx-carpenter
             baseHref="/"
             [headings]="headings"
             [rows]="rows"
+            [actions]="actions"
+    ></ngx-carpenter>
+
+    <h2>Empty Table With Rows</h2>
+    <ngx-carpenter
+            baseHref="/"
+            [headings]="headings"
+            [rows]="emptyRows"
+            [actions]="actions"
+    ></ngx-carpenter>
+
+    <h2>Table With Paginator</h2>
+    <ngx-carpenter
+            baseHref="/"
+            [headings]="headings"
+            [paginator]="paginator"
+            [actions]="actions"
+    ></ngx-carpenter>
+
+    <h2>Empty Table With Paginator</h2>
+    <ngx-carpenter
+            baseHref="/"
+            [headings]="headings"
+            [paginator]="emptyPaginator"
             [actions]="actions"
     ></ngx-carpenter>
 </div>
