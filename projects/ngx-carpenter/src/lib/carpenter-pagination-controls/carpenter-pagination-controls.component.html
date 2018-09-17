@@ -1,0 +1,6 @@
+<ul class="pagination {{ class }}">
+    <li *ngFor="let link of links" [ngClass]="{active: link.active, disabled: ! link.routerLink}">
+        <a *ngIf="link.routerLink" (click)="changePage(link.routerLink)">{{ link.page }}</a>
+        <span *ngIf=" ! link.routerLink">{{ link.page }}</span>
+    </li>
+</ul>

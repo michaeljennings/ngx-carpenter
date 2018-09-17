@@ -1,0 +1,7 @@
+<ng-container *ngIf="presenter">
+  <span [innerHtml]="presenter(value)"></span>
+</ng-container>
+
+<ng-container *ngIf="! presenter">
+  {{ value }}
+</ng-container>

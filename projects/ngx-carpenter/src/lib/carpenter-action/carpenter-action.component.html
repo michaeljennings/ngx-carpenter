@@ -1,0 +1,11 @@
+<ng-container *ngIf="action.routerLink">
+    <a [routerLink]="action.routerLink(row)" [ngClass]="action.class">
+        <i *ngIf="action.icon" [ngClass]="action.icon"></i> {{ action.label }}
+    </a>
+</ng-container>
+
+<ng-container *ngIf="action.callback">
+    <button type="button" [ngClass]="action.class" (click)="action.callback(row)">
+        <i *ngIf="action.icon" [ngClass]="action.icon"></i> {{ action.label }}
+    </button>
+</ng-container>

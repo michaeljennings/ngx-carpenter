@@ -121,6 +121,41 @@
           }
         }
       }
+    },
+    "ngx-carpenter": {
+      "root": "projects/ngx-carpenter",
+      "sourceRoot": "projects/ngx-carpenter/src",
+      "projectType": "library",
+      "prefix": "ngx",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/ngx-carpenter/tsconfig.lib.json",
+            "project": "projects/ngx-carpenter/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ngx-carpenter/src/test.ts",
+            "tsConfig": "projects/ngx-carpenter/tsconfig.spec.json",
+            "karmaConfig": "projects/ngx-carpenter/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/ngx-carpenter/tsconfig.lib.json",
+              "projects/ngx-carpenter/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "ngx-carpenter-app"

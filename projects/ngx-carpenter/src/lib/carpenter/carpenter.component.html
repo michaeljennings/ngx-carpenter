@@ -1,0 +1,84 @@
+<section class="panel panel-default">
+    <ng-content></ng-content>
+
+    <ng-container *ngIf=" ! loading">
+        <table class="table table-stack-md">
+            <thead class="hidden-sm hidden-xs" *ngIf="headings.length">
+                <tr>
+                    <th *ngFor="let heading of headings">
+                        <ng-container *ngIf="heading.unsortable">
+                            {{ heading.label }}
+                        </ng-container>
+
+                        <ng-container *ngIf="! heading.unsortable">
+                            <a (click)="sortColumn(heading)">
+                                {{ heading.label }}
+                                <ng-container *ngIf="request.sort && request.sort.column === heading.property">
+                                    <i [ngClass]="['icon', 'icon-chevron-' + (request.sort.order === 'asc' ? 'down' : 'up')]"></i>
+                                </ng-container>
+                            </a>
+                        </ng-container>
+                    </th>
+                    <th *ngIf="actions.length"></th>
+                </tr>
+            </thead>
+
+            <ng-container *ngIf="paginator">
+                <tbody>
+                    <tr *ngFor="let row of paginator.getData()">
+                        <td *ngFor="let heading of headings">
+                            <ngx-carpenter-cell [row]="row" [field]="heading.property" [presenter]="heading.presenter"></ngx-carpenter-cell>
+                        </td>
+                        <td>
+                            <ng-container *ngFor="let action of actions">
+                                <ngx-carpenter-action [action]="action" [row]="row"></ngx-carpenter-action>
+                            </ng-container>
+                        </td>
+                    </tr>
+                </tbody>
+
+                <tbody *ngIf="! paginator || ! paginator.getData()">
+                    <tr>
+                        <td class="text-center" [attr.colspan]="headings.length + 1">
+                            No results were found.
+                        </td>
+                    </tr>
+                </tbody>
+            </ng-container>
+
+            <ng-container *ngIf="rows && rows.length">
+                <tbody *ngIf="rows && rows.length">
+                    <tr *ngFor="let row of rows">
+                        <td *ngFor="let heading of headings">
+                            <ngx-carpenter-cell [row]="row" [field]="heading.property" [presenter]="heading.presenter"></ngx-carpenter-cell>
+                        </td>
+                        <td>
+                            <ng-container *ngFor="let action of actions">
+                                <ngx-carpenter-action [action]="action" [row]="row"></ngx-carpenter-action>
+                            </ng-container>
+                        </td>
+                    </tr>
+                </tbody>
+
+                <tbody *ngIf="! rows || ! rows.length">
+                    <tr>
+                        <td class="text-center" [attr.colspan]="headings.length + 1">
+                            No results were found.
+                        </td>
+                    </tr>
+                </tbody>
+            </ng-container>
+        </table>
+
+        <div class="panel-footer" *ngIf="paginator">
+            <div class="pull-right">
+                <ngx-carpenter-pagination-controls [links]="paginator.links(baseHref)" class="pagination-borderless"></ngx-carpenter-pagination-controls>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="loading">
+        <ngx-carpenter-preloader></ngx-carpenter-preloader>
+    </ng-container>
+</section>
