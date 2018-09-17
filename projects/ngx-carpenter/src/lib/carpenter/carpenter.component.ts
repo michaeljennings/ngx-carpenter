@@ -75,8 +75,10 @@ export class CarpenterComponent implements OnInit, DoCheck {
         const request = this.pathStorage.get(this.requestKey());
 
         if (request) {
-            this.request = request;
-            this.requestChange.emit(request);
+            setTimeout(() => {
+                this.request = request;
+                this.requestChange.emit(request);
+            });
         }
 
         this.route.queryParams.subscribe((params) => {
