@@ -98,4 +98,8 @@ export class AppComponent {
     config: Config = {
         actionGroup: 'btn-group-vertical'
     };
+
+    request = {
+        per_page: 15
+    };
 }

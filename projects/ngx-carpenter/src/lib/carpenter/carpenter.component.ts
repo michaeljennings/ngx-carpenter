@@ -89,7 +89,7 @@ export class CarpenterComponent implements OnInit, DoCheck {
 
         if (request) {
             setTimeout(() => {
-                this.request = request;
+                this.request = Object.assign(this.request, request);
                 this.requestChange.emit(request);
             });
         }
