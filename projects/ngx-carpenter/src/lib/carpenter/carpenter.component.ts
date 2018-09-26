@@ -5,6 +5,7 @@ import { Action } from '../contracts/action';
 import { Paginator } from '../contracts/paginator';
 import { PathStorageService } from '../services/path-storage.service';
 import { copy } from '../helpers/objects';
+import { Config } from '../contracts/config';
 
 @Component({
     selector: 'ngx-carpenter',
@@ -48,6 +49,18 @@ export class CarpenterComponent implements OnInit, DoCheck {
     @Input() public baseHref: string;
 
     /**
+     * The config for the table.
+     */
+    @Input() public config: Config = {};
+
+    /**
+     * The default config for a table.
+     */
+    public defaults: Config = {
+        actionGroup: 'btn-group'
+    };
+
+    /**
      * Fired when a filter is changed or the page changes so the user can
      * reload rows.
      */
@@ -86,6 +99,8 @@ export class CarpenterComponent implements OnInit, DoCheck {
 
             this.fetchRows.emit(this.request);
         });
+
+        this.config = Object.assign(this.defaults, this.config);
     }
 
     public ngDoCheck(): void {

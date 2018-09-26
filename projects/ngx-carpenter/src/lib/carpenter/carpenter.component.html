@@ -30,9 +30,11 @@
                             <ngx-carpenter-cell [row]="row" [field]="heading.property" [presenter]="heading.presenter"></ngx-carpenter-cell>
                         </td>
                         <td>
-                            <ng-container *ngFor="let action of actions">
-                                <ngx-carpenter-action [action]="action" [row]="row"></ngx-carpenter-action>
-                            </ng-container>
+                            <div [ngClass]="config.actionGroup">
+                                <ng-container *ngFor="let action of actions">
+                                    <ng-container *ngTemplateOutlet="actionTemplate; context: {action: action, row: row}"></ng-container>
+                                </ng-container>
+                            </div>
                         </td>
                     </tr>
                 </tbody>
@@ -54,33 +56,23 @@
                                 <ngx-carpenter-cell [row]="row" [field]="heading.property" [presenter]="heading.presenter"></ngx-carpenter-cell>
                             </td>
                             <td>
-                                <ng-container *ngFor="let action of actions">
-                                    <ngx-carpenter-action [action]="action" [row]="row"></ngx-carpenter-action>
-                                </ng-container>
+                                <div [ngClass]="config.actionGroup">
+                                    <ng-container *ngFor="let action of actions">
+                                        <ng-container *ngTemplateOutlet="actionTemplate; context: {action: action, row: row}"></ng-container>
+                                    </ng-container>
+                                </div>
                             </td>
                         </tr>
                     </tbody>
                 </ng-container>
 
                 <ng-container *ngIf="! rows.length">
-                    <tbody>
-                        <tr>
-                            <td class="text-center" [attr.colspan]="headings.length + 1">
-                                No results were found.
-                            </td>
-                        </tr>
-                    </tbody>
+                    <ng-container *ngTemplateOutlet="noRows; context: {headings: headings}"></ng-container>
                 </ng-container>
             </ng-container>
 
             <ng-container *ngIf=" ! rows && ! paginator">
-                <tbody>
-                    <tr>
-                        <td class="text-center" [attr.colspan]="headings.length + 1">
-                            No results were found.
-                        </td>
-                    </tr>
-                </tbody>
+                <ng-container *ngTemplateOutlet="noRows; context: {headings: headings}"></ng-container>
             </ng-container>
         </table>
 
@@ -96,3 +88,56 @@
         <ngx-carpenter-preloader></ngx-carpenter-preloader>
     </ng-container>
 </section>
+
+<ng-template #actionTemplate let-action="action" let-row="row">
+    <ng-container *ngIf="! action.group">
+        <ng-container *ngIf="action.routerLink">
+            <a [routerLink]="action.routerLink(row)" [ngClass]="action.class">
+                <ng-container *ngTemplateOutlet="actionLabel; context: {action: action}"></ng-container>
+            </a>
+        </ng-container>
+
+        <ng-container *ngIf="action.callback">
+            <button type="button" [ngClass]="action.class" (click)="action.callback(row)">
+                <ng-container *ngTemplateOutlet="actionLabel; context: {action: action}"></ng-container>
+            </button>
+        </ng-container>
+    </ng-container>
+
+    <ng-container *ngIf="action.group">
+        <div class="btn-group" dropdown>
+            <button id="button-basic" dropdownToggle type="button" class="btn dropdown-toggle" [ngClass]="action.class" aria-controls="dropdown-basic">
+                {{ action.label }} <span class="caret"></span>
+            </button>
+            <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
+                <li role="menuitem" *ngFor="let innerAction of action.group">
+                    <ng-container *ngIf="innerAction.routerLink">
+                        <a class="dropdown-item" [routerLink]="innerAction.routerLink(row)">
+                            <ng-container *ngTemplateOutlet="actionLabel; context: {action: innerAction}"></ng-container>
+                        </a>
+                    </ng-container>
+
+                    <ng-container *ngIf="innerAction.callback">
+                        <a class="dropdown-item" (click)="innerAction.callback(row)">
+                            <ng-container *ngTemplateOutlet="actionLabel; context: {action: innerAction}"></ng-container>
+                        </a>
+                    </ng-container>
+                </li>
+            </ul>
+        </div>
+    </ng-container>
+</ng-template>
+
+<ng-template #actionLabel let-action="action">
+    <i *ngIf="action.icon" [ngClass]="action.icon"></i> {{ action.label }}
+</ng-template>
+
+<ng-template #noRows let-headings="headings">
+    <tbody>
+        <tr>
+            <td class="text-center" [attr.colspan]="headings.length + 1">
+                No results were found.
+            </td>
+        </tr>
+    </tbody>
+</ng-template>

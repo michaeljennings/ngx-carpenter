@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Heading } from 'ngx-carpenter/lib/contracts/heading';
 import { Action } from 'ngx-carpenter/lib/contracts/action';
 import { Paginator } from './paginator';
+import { Config } from '../../projects/ngx-carpenter/src/lib/contracts/config';
 
 @Component({
     selector: 'app-root',
@@ -93,4 +94,8 @@ export class AppComponent {
         last_page: 1,
         current_page: 1
     });
+
+    config: Config = {
+        actionGroup: 'btn-group-vertical'
+    };
 }
